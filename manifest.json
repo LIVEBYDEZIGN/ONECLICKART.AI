@@ -1,0 +1,85 @@
+{
+    "manifest_version": 3,
+    "name": "Mama Banana",
+    "version": "1.0",
+    "description": "AI-powered artwork reinvention assistant for Pinterest, Etsy, Midjourney, Displate, and more — powered by Kie AI.",
+    "icons": {
+        "16": "favicon.png",
+        "48": "favicon.png",
+        "128": "favicon.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Mama Banana",
+        "default_icon": "favicon.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "downloads",
+        "scripting"
+    ],
+    "host_permissions": [
+        "*://*.pinterest.com/*",
+        "*://*.etsy.com/*",
+        "*://*.midjourney.com/*",
+        "*://*.displate.com/*",
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.pinterest.com/*"
+            ],
+            "css": [
+                "content.css"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "http://localhost:*/*",
+                "https://*.netlify.app/*"
+            ],
+            "js": [
+                "mama_banana_injector.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.etsy.com/listing/*",
+                "*://*.etsy.com/*/listing/*"
+            ],
+            "js": [
+                "etsy_content.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.midjourney.com/*"
+            ],
+            "js": [
+                "midjourney_content.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.displate.com/*"
+            ],
+            "js": [
+                "displate_content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}

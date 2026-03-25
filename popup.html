@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama Banana Settings</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="header">
+        <span class="logo">🍌</span>
+        <div class="header-text">
+            <h1>Mama Banana</h1>
+            <p>AI Settings</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <label for="model-select">Model</label>
+        <select id="model-select">
+            <option value="3.1">Kie AI 3.1 (nano-banana-2)</option>
+            <option value="3.0">Kie AI 3.0 (nano-banana-pro)</option>
+        </select>
+    </div>
+
+    <div class="section">
+        <label>How Many Images</label>
+        <div class="count-group" id="count-group">
+            <button class="count-btn" data-count="1">1</button>
+            <button class="count-btn" data-count="2">2</button>
+            <button class="count-btn" data-count="3">3</button>
+            <button class="count-btn" data-count="4">4</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <label for="prompt-input">Prompt</label>
+        <textarea id="prompt-input" placeholder="Enter your custom generation prompt here…" rows="6"></textarea>
+    </div>
+
+    <button id="save-btn">
+        <span id="save-label">💾 Save Settings</span>
+    </button>
+
+    <div id="status-msg" class="status-msg hidden"></div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
