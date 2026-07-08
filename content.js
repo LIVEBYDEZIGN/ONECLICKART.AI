@@ -18,6 +18,7 @@
 // ── DATA STORE ───────────────────────────────────────────────
 // pinStore: Map<pinId, {pinId, href, imgSrc, imgSrcSet, title, stats}>
 const pinStore = new Map();
+let isExtensionEnabled = true;
 
 // ── HELPERS ──────────────────────────────────────────────────
 function getPinId(pinEl) {
@@ -73,7 +74,8 @@ async function fetchPinStats(pinId) {
 }
 
 async function injectStatsPopup(pinEl, pinId) {
-    if (pinEl.querySelector('.pin-stats-popup')) return; // already injected
+    if (!isExtensionEnabled) return null;
+    if (pinEl.querySelector('.pin-stats-popup') || pinEl.querySelector('.pin-stats')) return null; // already injected
     
     // Pinterest uses absolute positioning for grid items based on scroll math.
     // Making this relative breaks their entire grid calculation. Do NOT do that!
@@ -454,6 +456,7 @@ function stopAutoScroll() {
 
 // ── FLOATING PANEL ────────────────────────────────────────────
 function injectSortUI() {
+    if (!isExtensionEnabled) return;
     if (document.getElementById('pinterest-sort-ui')) return;
 
     const ui = document.createElement('div');
@@ -523,3 +526,32 @@ new MutationObserver(() => {
         setTimeout(injectSortUI, 3000);
     }
 }).observe(document.head || document.documentElement, { childList: true, subtree: false });
+
+// ── Toggle Switch Storage Management ──
+chrome.storage.local.get({ extensionEnabled: true }, (result) => {
+    isExtensionEnabled = result.extensionEnabled;
+    if (!isExtensionEnabled) {
+        removePinterestUI();
+    }
+});
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'local' && changes.extensionEnabled !== undefined) {
+        isExtensionEnabled = changes.extensionEnabled.newValue;
+        if (!isExtensionEnabled) {
+            removePinterestUI();
+        } else {
+            injectSortUI();
+            scanVisiblePins();
+        }
+    }
+});
+
+function removePinterestUI() {
+    stopAutoScroll();
+    document.getElementById('pinterest-sort-ui')?.remove();
+    overlayEl?.remove();
+    overlayEl = null;
+    document.querySelectorAll('.pin-stats').forEach(el => el.remove());
+    document.querySelectorAll('.pin-stats-loader').forEach(el => el.remove());
+}

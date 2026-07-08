@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Mama Banana",
+    "name": "ONECLICKART.AI",
     "version": "1.0",
     "description": "AI-powered artwork reinvention assistant for Pinterest, Etsy, Midjourney, Displate, and more — powered by Kie AI.",
     "icons": {
@@ -9,16 +9,21 @@
         "128": "favicon.png"
     },
     "action": {
-        "default_popup": "popup.html",
-        "default_title": "Mama Banana",
+        "default_title": "ONECLICKART.AI",
         "default_icon": "favicon.png"
     },
     "permissions": [
         "activeTab",
+        "tabs",
         "storage",
         "downloads",
-        "scripting"
+        "scripting",
+        "contextMenus",
+        "sidePanel"
     ],
+    "side_panel": {
+        "default_path": "popup.html"
+    },
     "host_permissions": [
         "*://*.pinterest.com/*",
         "*://*.etsy.com/*",
@@ -33,6 +38,19 @@
     "content_scripts": [
         {
             "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+                "generic_content.css"
+            ],
+            "js": [
+                "generic_content.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
                 "*://*.pinterest.com/*"
             ],
             "css": [
@@ -45,39 +63,11 @@
         },
         {
             "matches": [
-                "http://localhost:*/*",
+                "http://localhost/*",
                 "https://*.netlify.app/*"
             ],
             "js": [
                 "mama_banana_injector.js"
-            ],
-            "run_at": "document_idle"
-        },
-        {
-            "matches": [
-                "*://*.etsy.com/listing/*",
-                "*://*.etsy.com/*/listing/*"
-            ],
-            "js": [
-                "etsy_content.js"
-            ],
-            "run_at": "document_idle"
-        },
-        {
-            "matches": [
-                "*://*.midjourney.com/*"
-            ],
-            "js": [
-                "midjourney_content.js"
-            ],
-            "run_at": "document_idle"
-        },
-        {
-            "matches": [
-                "*://*.displate.com/*"
-            ],
-            "js": [
-                "displate_content.js"
             ],
             "run_at": "document_idle"
         }

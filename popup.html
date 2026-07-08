@@ -4,30 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mama Banana Settings</title>
+    <title>ONECLICKART.AI - Side Panel</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 
 <body>
+    <!-- Brand Header -->
     <div class="header">
-        <span class="logo">🍌</span>
+        <span class="logo">✨</span>
         <div class="header-text">
-            <h1>Mama Banana</h1>
-            <p>AI Settings</p>
+            <h1>ONECLICKART.AI</h1>
+        </div>
+        <div class="hover-toggle-container">
+            <span class="toggle-label" title="Enable/Disable hover buttons on pages">ON/OFF</span>
+            <label class="switch">
+                <input type="checkbox" id="extensionToggle" checked>
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
 
+    <!-- Customer Prompt Box -->
     <div class="section">
-        <label for="model-select">Model</label>
+        <label for="prompt-input">Custom Prompt</label>
+        <textarea id="prompt-input" placeholder="Type your custom prompts here (e.g., add a blue cat)..."
+            rows="3"></textarea>
+    </div>
+
+    <!-- 4-Button Slider (Variation Strength) -->
+    <div class="section">
+        <label>Variation Strength</label>
+        <div class="slider-container">
+            <button class="slider-btn" data-slide="1"
+                title="Slider 1: Exact recreation with aspect ratio adjust only">1</button>
+            <button class="slider-btn" data-slide="2"
+                title="Slider 2: Keep exact style/concept but different composition">2</button>
+            <button class="slider-btn" data-slide="3"
+                title="Slider 3: Recreate complete variation with style as inspiration">3</button>
+            <button class="slider-btn" data-slide="4"
+                title="Slider 4: Full creative reinvention of composition/layout">4</button>
+        </div>
+        <div class="slider-subtext" id="slider-desc">Slider 2: Keep exact style/concept but different composition</div>
+    </div>
+
+    <!-- AI Generator Model (Always Open) -->
+    <div class="section">
+        <label for="model-select">AI Generator Model</label>
         <select id="model-select">
-            <option value="3.1">Kie AI 3.1 (nano-banana-2)</option>
-            <option value="3.0">Kie AI 3.0 (nano-banana-pro)</option>
+            <option value="3.1">🍌 3.1</option>
+            <option value="3.0">🍌 3.0</option>
+            <option value="gpt-image-2">🍌 GPT 2</option>
         </select>
     </div>
 
+    <!-- Image Variants Count (Always Open) -->
     <div class="section">
-        <label>How Many Images</label>
-        <div class="count-group" id="count-group">
+        <label>Image to Create</label>
+        <div class="count-group">
             <button class="count-btn" data-count="1">1</button>
             <button class="count-btn" data-count="2">2</button>
             <button class="count-btn" data-count="3">3</button>
@@ -35,16 +68,18 @@
         </div>
     </div>
 
-    <div class="section">
-        <label for="prompt-input">Prompt</label>
-        <textarea id="prompt-input" placeholder="Enter your custom generation prompt here…" rows="6"></textarea>
-    </div>
-
+    <!-- Save Trigger Button -->
     <button id="save-btn">
-        <span id="save-label">💾 Save Settings</span>
+        <span>SAVE</span>
     </button>
 
     <div id="status-msg" class="status-msg hidden"></div>
+
+    <!-- Styles Grid (Repositioned below SAVE button) -->
+    <div class="section styles-grid-section">
+        <label>Artistic Styles</label>
+        <div class="styles-grid" id="styles-grid"></div>
+    </div>
 
     <script src="popup.js"></script>
 </body>
